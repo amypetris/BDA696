@@ -29,7 +29,9 @@ def summary(df):
 
 
 def plot(df):
-    fig_hist = px.histogram(df, x="sepal_length", color="class", opacity=0.5)
+    fig_hist = px.histogram(
+        df, x="sepal_length", color="class", opacity=0.75, barmode="overlay"
+    )
     fig_hist.show()
 
     fig_scatter = px.scatter(df, x="sepal_length", y="sepal_width", color="class")
