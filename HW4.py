@@ -10,7 +10,7 @@ from plotly import express as px
 from plotly import figure_factory as ff
 from plotly import graph_objects as go
 from scipy.stats import binned_statistic
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.inspection import permutation_importance
 from sklearn.metrics import confusion_matrix
 
@@ -230,15 +230,26 @@ def table_difference_with_mean(x, y, num_bins, pred_name):
     return file_name
 
 
-def random_forest_importance_ranking(X, y):
+def random_forest_importance_ranking_classify(X, y, num_predictors):
     random_forest = RandomForestClassifier(random_state=1234)
     random_forest.fit(X, y)
     result = permutation_importance(
-        random_forest, X, y, n_repeats=10, random_state=1234
+        random_forest, X, y, n_repeats=num_predictors, random_state=1234
     )
     importances = result["importances_mean"]
     importance_rank = ss.rankdata(importances)
-    return 10 - importance_rank
+    return num_predictors - importance_rank
+
+
+def random_forest_importance_ranking_regressor(X, y, num_predictors):
+    random_forest = RandomForestRegressor(random_state=1234)
+    random_forest.fit(X, y)
+    result = permutation_importance(
+        random_forest, X, y, n_repeats=num_predictors, random_state=1234
+    )
+    importances = result["importances_mean"]
+    importance_rank = ss.rankdata(importances)
+    return num_predictors - importance_rank
 
 
 def fun(path):
@@ -304,7 +315,10 @@ def main():
         diff_mean_plots.append(plot2_link)
         diff_mean_tables.append(table_link)
 
-    rank = random_forest_importance_ranking(X, y)
+    if response_type == "cat":
+        rank = random_forest_importance_ranking_classify(X, y, len(predictor_names))
+    elif response_type == "con":
+        rank = random_forest_importance_ranking_regressor(X, y, len(predictor_names))
 
     # put plots, tables, etc in table for final report
     df = pd.DataFrame(
