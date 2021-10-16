@@ -1,4 +1,8 @@
 numpy
 pandas
-scikit-learn
+sklearn
 plotly
+pyspark
+pyspark-stubs
+scipy
+statsmodels

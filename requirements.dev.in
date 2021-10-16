@@ -9,4 +9,9 @@ nose
 numpy
 pandas
 scikit-learn
+sklearn
+scipy
+statsmodels
 plotly
+pyspark
+pyspark-stubs
