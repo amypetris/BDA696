@@ -153,3 +153,5 @@ static
 # Project related ignores (place project related ignores below here)
 metastore_db
 spark-warehouse
+HW1.py
+hw3.py
