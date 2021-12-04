@@ -1,0 +1,28 @@
+version: "3.3"
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    restart: unless-stopped
+    ports:
+      - "5000:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: password # pragma: allowlist secret
+    volumes:
+      - "mariadb-volume:/var/lib/mysql/"
+
+  hw6:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hw6
+    restart: "no"
+    ports:
+      - "5001:8080"
+    depends_on:
+      - mariadb
+    volumes:
+      - ./result:/app
+
+volumes:
+  mariadb-volume:
