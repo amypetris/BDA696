@@ -6,7 +6,4 @@ jupyterlab
 pip-tools
 pre-commit==2.9.2
 nose
-numpy
-pandas
-scikit-learn
-plotly
+

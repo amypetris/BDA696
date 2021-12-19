@@ -1,4 +1,10 @@
 numpy
 pandas
-scikit-learn
+sklearn
 plotly
+scipy
+statsmodels
+sqlalchemy
+matplotlib
+PyMySQL
+Jinja2
